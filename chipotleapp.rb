@@ -5,7 +5,8 @@ get '/' do
 	erb :index
 end
 post "/SMS" do
-  params[:Body]
+  put "this is the body of a text" 
+  put params[:Body]
 end
 ####################################
 # Accessing database
