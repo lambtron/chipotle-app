@@ -4,7 +4,7 @@ require 'sinatra'
 get '/' do
 	erb :index
 end
-post "/SMS" do
+post "/sms" do
   put "this is the body of a text" 
   put params[:Body]
 end
