@@ -4,20 +4,23 @@ require 'sinatra'
 get '/' do
 	erb :index
 end
+post "/SMS" do
+  params[:Body]
+end
 ####################################
 # Accessing database
 # ####################################
-require 'mongo'
-require 'uri'
+# require 'mongo'
+# require 'uri'
 
-def get_connection
-  return @db_connection if @db_connection
-  db = URI.parse(ENV['MONGOHQ_URL'])
-  db_name = db.path.gsub(/^\//, '')
-  @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
-  @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
-  @db_connection
-end
+# def get_connection
+#   return @db_connection if @db_connection
+#   db = URI.parse(ENV['MONGOHQ_URL'])
+#   db_name = db.path.gsub(/^\//, '')
+#   @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
+#   @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
+#   @db_connection
+# end
 
 # include Mongo
 # def get_connection
@@ -42,7 +45,6 @@ def set_time(doc)
   coll = db.collection("time_since_chipotle")
   coll.update({"id" => doc["id"]}, doc)
 end
-4:34
 # Delete.
 def delete_time(doc)
   db = get_connection
