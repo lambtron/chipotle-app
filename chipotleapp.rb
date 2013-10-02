@@ -7,6 +7,7 @@ end
 post "/sms" do
   put "this is the body of a text" 
   put params[:Body]
+  erb :index
 end
 ####################################
 # Accessing database
