@@ -1,3 +1,5 @@
-<strong>Lindsey rules</strong>
-<br>
-<%= @time_since_chipotle %>
+<% if @time_since_chipotle == -1 %>
+	It has been forever since we've had a burrito.
+<% else %>
+	It's been <%= @time_since_chipotle %> days since our last Chipotle.
+<% end %>

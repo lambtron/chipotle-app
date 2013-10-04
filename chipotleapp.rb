@@ -5,16 +5,16 @@ require 'time'
 
 get '/' do
   # Retrieve from mongo the time_since_chipotle.
-  last_time_at_chipotle = get_all_times.to_a[0]
+  last_time_at_chipotle = get_all_times.to_a[0]["datetime"]
 
   # Get now.
-  now = DateTime.now
+  now = Date.now
 
   # Calculate difference in time.
   unless last_time_at_chipotle.nil?
-    @time_since_chipotle = now - last_time_at_chipotle
+    @time_since_chipotle = (now - last_time_at_chipotle).to_i
   else
-    @time_since_chipotle = "It has been forever since we've had a burrito."
+    @time_since_chipotle = -1
   end
 
   # Pass time_since_chipotle to front-end.
@@ -23,10 +23,10 @@ end
 
 post '/sms/?' do
   # Receiving this text should update the Mongo.
-  new_time_at_chipotle = {"datetime" => DateTime.now}
+  new_time_at_chipotle = {"datetime" => Date.now}
 
-  # Add now to mongo.
-  add_time(new_time_at_chipotle)
+  # Update mongo record.
+  set_time(new_time_at_chipotle)
 
   erb :index
 end
@@ -70,14 +70,7 @@ end
 def set_time(doc)
   db = get_connection
   coll = db.collection("last_time_since_chipotle")
-  coll.update({"id" => doc["id"]}, doc)
-end
-
-# Delete.
-def delete_time(doc)
-  db = get_connection
-  coll = db.collection("last_time_since_chipotle")
-  coll.remove("id" => doc["id"])
+  coll.update({"datetime" => "datetime"}, doc)
 end
 
 # Delete all.
