@@ -5,7 +5,11 @@ require 'time'
 
 get '/' do
   # Retrieve from mongo the time_since_chipotle.
-  last_time_at_chipotle = get_all_times.to_a[0]["datetime"]
+  if !get_all_times.to_a.empty?
+    last_time_at_chipotle = get_all_times.to_a[0]["datetime"]
+  else
+    last_time_at_chipotle = nil
+  end
 
   # Get now.
   now = Date.now
