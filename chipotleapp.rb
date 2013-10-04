@@ -37,20 +37,20 @@ end
 require 'mongo'
 require 'uri'
 
-# def get_connection
-#   return @db_connection if @db_connection
-#   db = URI.parse(ENV['MONGOHQ_URL'])
-#   db_name = db.path.gsub(/^\//, '')
-#   @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
-#   @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
-#   @db_connection
-# end
-
-include Mongo
 def get_connection
-  mongo_client = MongoClient.new
-  return mongo_client.db("db")
+  return @db_connection if @db_connection
+  db = URI.parse(ENV['MONGOHQ_URL'])
+  db_name = db.path.gsub(/^\//, '')
+  @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
+  @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
+  @db_connection
 end
+
+# include Mongo
+# def get_connection
+#   mongo_client = MongoClient.new
+#   return mongo_client.db("db")
+# end
 
 # Create
 def add_time(doc)
