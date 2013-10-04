@@ -79,9 +79,3 @@ def delete_all_times
   coll = db.collection("last_time_since_chipotle")
   coll.remove
 end
-
-# Things to do
-	# parse inbound SMS
-	# insert, update time_since_chipotle
-	# upon refresh, calculate difference between now and time_since_chipotle, show that onto website
-	#when reset, send text message to people on the subscriber list
